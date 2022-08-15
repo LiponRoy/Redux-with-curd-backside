@@ -6,7 +6,8 @@ const { errorHandler } = require('./middleware/errorMiddleware');
 const mongodb_con = require('./DB_connect/MongodbMe');
 const dotenv = require('dotenv').config();
 //getting router
-const userRouter = require('./router/userRouter');
+const phoneRouter = require('./router/phoneRouter');
+const userRouter = require('./router/user');
 //getting port form env file.
 const port = process.env.PORT;
 
@@ -16,6 +17,7 @@ mongodb_con();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(errorHandler);
-app.use(userRouter);
+app.use('/phone', phoneRouter);
+app.use('/user', userRouter);
 
 app.listen(port, () => console.log(`server started on port ${port}`));

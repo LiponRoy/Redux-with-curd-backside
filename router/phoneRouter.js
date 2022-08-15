@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getData, createData } = require('../controller/userControler');
+const { getData, createData } = require('../controller/phoneControler');
 
 router.get('/', getData);
 router.post('/create', createData);
