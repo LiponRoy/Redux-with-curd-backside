@@ -2,6 +2,7 @@ const userModel = require('../model/user');
 const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcryptjs');
 const phoneUser = require('../model/user');
+const jwt = require('jsonwebtoken');
 
 const registerUser = asyncHandler(async (req, res) => {
 	const { name, email, password } = req.body;
@@ -32,6 +33,7 @@ const registerUser = asyncHandler(async (req, res) => {
 			_id: userData.id,
 			name: userData.name,
 			email: userData.email,
+			token: generateToken(userData.id),
 			// password: userData.password,
 		});
 	} else {
@@ -54,6 +56,7 @@ const loginUser = asyncHandler(async (req, res) => {
 			_id: user.id,
 			name: user.name,
 			email: user.email,
+			token: generateToken(user._id),
 		});
 	} else {
 		res.status(400);
@@ -61,7 +64,31 @@ const loginUser = asyncHandler(async (req, res) => {
 	}
 });
 
+const getAllUser = asyncHandler(async (req, res) => {
+	const getUsers = await userModel.find();
+	if (!getUsers) {
+		res.status(400);
+		throw new Error('user not found');
+	}
+
+	res.status(200).json(getUsers);
+});
+
+///............ bb nn nn h ff ...........
+const getMe = (req, res) => {
+	res.json({ message: 'I am here wow....yeaaaaaa.....' });
+};
+
+// create JWT token
+const generateToken = id => {
+	return jwt.sign({ id }, process.env.JWT_SECRET, {
+		expiresIn: '30d',
+	});
+};
+
 module.exports = {
+	getAllUser,
 	registerUser,
 	loginUser,
+	getMe,
 };
