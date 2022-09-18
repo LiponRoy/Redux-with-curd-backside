@@ -10,5 +10,6 @@ const PhoneSchema = new mongoose.Schema(
 		timestamps: true,
 	},
 );
+
 const phoneNumber = mongoose.model('phoneNumber', PhoneSchema);
 module.exports = phoneNumber;
