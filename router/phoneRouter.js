@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { getData, createData, updateData, deleteData } = require('../controller/phoneControler');
+const { createPhonebook, getAllPhonebook, getPhonebook, updatePhonebook, deletePhonebook } = require('../controller/phoneControler');
 
-router.get('/', getData);
-router.post('/create', createData);
-router.put('/update/:id', updateData);
-router.delete('/delete/:id', deleteData);
+router.post('/create', createPhonebook);
+router.get('/', getAllPhonebook);
+router.get('/phonebook/:id', getPhonebook);
+router.put('/update/:id', updatePhonebook);
+router.delete('/delete/:id', deletePhonebook);
 
 module.exports = router;
