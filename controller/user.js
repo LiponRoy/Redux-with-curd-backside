@@ -37,7 +37,7 @@ const loginUser = catchAsyncError(async (req, res, next) => {
 		return next(new ErrorHandler('Please enter the email & password', 400));
 	}
 
-	const user = await userModel.findOne({ email }).select('+password');
+	const user = await userModel.findOne({ email });
 
 	if (!user) {
 		return next(new ErrorHandler('User is not find with this email & password', 401));

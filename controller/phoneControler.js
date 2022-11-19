@@ -7,11 +7,15 @@ const createPhonebook = asyncHandler(async (req, res) => {
 	const isExits = await phoneModel.findOne({ name });
 	if (isExits) {
 		res.status(400);
-		throw new Error('already exits ! Very Sad');
+		throw new Error.json({
+			errorMessage: 'already exits ! Very Sad',
+		});
 	}
 	if (!name || !phoneNumber || !location) {
 		res.status(400);
-		throw new Error('please add all field');
+		throw new Error.json({
+			errorMessage: 'please add all field',
+		});
 	}
 	const savePhoneNumber = await phoneModel.create({
 		name,
@@ -19,19 +23,19 @@ const createPhonebook = asyncHandler(async (req, res) => {
 		location,
 	});
 	res.status(200).json({
-		success: true,
 		savePhoneNumber,
+		successMessage: 'Data pushed successfully',
 	});
 });
 
 const getAllPhonebook = asyncHandler(async (req, res) => {
-	const phoneNo = await phoneModel.find();
-	if (!phoneNo) {
+	const getAllPhoneNo = await phoneModel.find();
+	if (!getAllPhoneNo) {
 		res.status(400);
 		throw new Error('all data not found !');
 	}
 
-	res.status(200).json(phoneNo);
+	res.status(200).json(getAllPhoneNo);
 });
 const getPhonebook = asyncHandler(async (req, res) => {
 	const phoneNo = await phoneModel.findById(req.params.id);

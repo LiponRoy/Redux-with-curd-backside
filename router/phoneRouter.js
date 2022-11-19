@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { createPhonebook, getAllPhonebook, getPhonebook, updatePhonebook, deletePhonebook } = require('../controller/phoneControler');
+const { jwtAuth } = require('../JwtAll/jwtAuth');
 
 router.post('/create', createPhonebook);
 router.get('/', getAllPhonebook);
